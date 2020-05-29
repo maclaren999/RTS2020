@@ -43,12 +43,9 @@ class Genetic_alg : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        try {
             val intent = Intent(this@Genetic_alg, MainActivity::class.java)
             startActivity(intent)
             finish()
-        } catch (e: Exception) {
-        }
     }
 
     companion object {

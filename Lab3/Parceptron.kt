@@ -51,12 +51,9 @@ class Parceptron : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        try {
             val intent = Intent(this@Parceptron, MainActivity::class.java)
             startActivity(intent)
             finish()
-        } catch (e: Exception) {
-        }
     }
 
     companion object {
