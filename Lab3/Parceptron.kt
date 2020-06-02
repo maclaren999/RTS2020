@@ -2,11 +2,14 @@ package com.example.lab3
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lab3.Parceptron
+import kotlinx.android.synthetic.main.activity_parceptron.*
+
+/*
+
+Счетчик на строке 78, вывод на 47
+
+*/
 
 class Parceptron : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,20 +17,21 @@ class Parceptron : AppCompatActivity() {
         setContentView(R.layout.activity_parceptron)
         val P = 4
         val pointsArr = arrayOf(intArrayOf(0, 6), intArrayOf(1, 5), intArrayOf(3, 3), intArrayOf(2, 4))
-        val points = findViewById<View>(R.id.points) as TextView
+        val points = points
         var arr = "P=$P\n"
         for (i in pointsArr.indices) {
             arr += "("
             arr += pointsArr[i][0].toString() + "; "
             arr += pointsArr[i][1].toString() + "), "
         }
+
         points.text = arr
-        val calc = findViewById<View>(R.id.button) as Button
+        val calc = button
         calc.setOnClickListener {
-            val edTime = findViewById<View>(R.id.edTime) as TextView
+            val edTime = edTime
             val t = edTime.text.toString().toInt()
-            val iter = (findViewById<View>(R.id.edIter) as TextView).text.toString().toInt()
-            val sigma = (findViewById<View>(R.id.edSigma) as TextView).text.toString().toDouble()
+            val iter = edIter.text.toString().toInt()
+            val sigma = edSigma.text.toString().toDouble()
             val result = parceptron(P, pointsArr, sigma, t.toLong(), iter)
             var res: String
             res = """
@@ -38,15 +42,16 @@ class Parceptron : AppCompatActivity() {
                 w2=${result[1]}
 
                 """.trimIndent()
+            //вывод итераций
             res += """
-                Count of iteration: ${result[2]}
+                Количество итераций: ${result[2]}
 
                 """.trimIndent()
             res += """
-                Time: ${result[3]}
+                Время: ${result[3]}
 
                 """.trimIndent()
-            (findViewById<View>(R.id.res) as TextView).text = res
+            resPercTextView.text = res
         }
     }
 
@@ -62,12 +67,14 @@ class Parceptron : AppCompatActivity() {
             var y: Double
             var w1 = 0.0
             var w2 = 0.0
+            //счетчик
             var j = 0
             val timeBefore = System.currentTimeMillis()
             var timeAfter: Long = 0
             for (k in 0 until iter) {
                 run {
                     for (i in points.indices) {
+                        //+итерация
                         j++
                         y = points[i][0] * w1 + points[i][1] * w2
                         if (y == Double.NEGATIVE_INFINITY || y == Double.POSITIVE_INFINITY) {
